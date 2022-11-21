@@ -10,7 +10,7 @@ describe('Form', () => {
   // });
   it('render component', () => {
     const addMessage = jest.fn();
-    render(<Form addMessage={addMessage} />);
+    render(<Form  />);
   });
   // it('input change with fireevent', () => {
   //   const input = screen.getByTestId<HTMLInputElement>('input');
