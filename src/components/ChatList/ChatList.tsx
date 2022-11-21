@@ -1,21 +1,17 @@
 import {ListItem} from '@mui/material';
 import {NavLink} from 'react-router-dom';
-import {FC, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {FC, useEffect, useState} from 'react';
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {addChat, deleteChat} from "store/messages/actions";
-import {StoreState} from "src/store";
-import {nanoid} from "nanoid";
+import {selectChats} from "store/messages/selectors";
 
 
 export const ChatList: FC = () => {
     const [value, setValue] = useState('');
     const dispatch = useDispatch();
-    const messages = useSelector((state: StoreState) => state.messages)
+    const chats = useSelector(selectChats, (prev, next) => prev.length === next.length)
 
-    const chats = Object.keys(messages).map(chatName => ({
-        id: nanoid(),
-        name: chatName
-    }));
+
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
