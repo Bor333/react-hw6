@@ -11,5 +11,4 @@ const rootReducer = combineReducers({
 })
 
 export  type StoreState = ReturnType<typeof rootReducer>;
-
 export const store = createStore(rootReducer, composeEnhancers());
