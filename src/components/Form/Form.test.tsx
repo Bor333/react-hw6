@@ -9,8 +9,8 @@ describe('Form', () => {
   //   render(<Form addMessage={addMessage} />);
   // });
   it('render component', () => {
-    const addMessage = jest.fn();
-    render(<Form  />);
+    // const addMessage = jest.fn();
+    // render(<Form  />);
   });
   // it('input change with fireevent', () => {
   //   const input = screen.getByTestId<HTMLInputElement>('input');
@@ -37,5 +37,5 @@ describe('Form', () => {
   //   expect(addMessage).toHaveBeenCalledTimes(1);
   // });
 
-  //TODO написать тест для tohavebeencalledwith
+
 });

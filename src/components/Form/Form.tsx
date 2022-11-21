@@ -7,6 +7,7 @@ import {AUTHOR} from 'src/types';
 import {ThemeContext} from './../../utils/ThemeContext';
 import {useDispatch} from "react-redux";
 import {addMessage} from "store/messages/actions";
+import {Wrapper} from "components/Form/styled";
 
 
 export const Form: FC = memo(() => {
@@ -29,7 +30,7 @@ export const Form: FC = memo(() => {
     };
 
     return (
-        <>
+        <Wrapper>
             <form onSubmit={handleSubmit}>
                 <TextField
                     value={value}
@@ -46,6 +47,6 @@ export const Form: FC = memo(() => {
 
             <p>theme: {theme === 'light' ? '🌞' : '🌙'}</p>
             <button onClick={toggleTheme}>toggle theme</button>
-        </>
+        </Wrapper>
     );
 });

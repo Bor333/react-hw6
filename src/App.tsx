@@ -1,9 +1,9 @@
 import React, {FC, Suspense,  useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {Main} from './pages/Main';
-import {ChatList} from './components/ChatList';
+import {ChatList} from 'components/ChatList';
 import {ChatPage} from './pages/ChatPage';
-import {Header} from './components/Header';
+import {Header} from 'components/Header';
 import {ThemeContext} from './utils/ThemeContext';
 import {Provider} from 'react-redux';
 import {store} from './store';
