@@ -4,23 +4,26 @@ import {useParams} from 'react-router-dom';
 
 import {Button} from './components/Button';
 import {AUTHOR} from 'src/types';
-import {ThemeContext} from './../../utils/ThemeContext';
+import {ThemeContext} from 'src/utils/ThemeContext';
 import {useDispatch} from "react-redux";
-import {addMessage} from "store/messages/actions";
+import {addMessage, addMessageWithReply} from "store/messages/actions";
 import {Wrapper} from "components/Form/styled";
+import {ThunkDispatch} from "redux-thunk";
+import {StoreState} from "src/store";
+import {AddMessage} from "store/messages/types";
 
 
 export const Form: FC = memo(() => {
     const [value, setValue] = useState('');
     const {chatId} = useParams();
     const {theme, toggleTheme} = useContext(ThemeContext);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<ThunkDispatch<StoreState, void, AddMessage>>();
 
 
     const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         if (chatId) {
-            dispatch(addMessage(chatId, {
+            dispatch(addMessageWithReply(chatId, {
                     author: AUTHOR.USER,
                     value,
                 })
