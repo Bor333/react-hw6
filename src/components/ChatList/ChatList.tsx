@@ -1,8 +1,8 @@
 import {ListItem} from '@mui/material';
 import {NavLink} from 'react-router-dom';
-import {FC, useEffect, useState} from 'react';
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {addChat, deleteChat} from "store/messages/actions";
+import {FC, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {addChat, deleteChat} from "store/messages/slice";
 import {selectChats} from "store/messages/selectors";
 
 

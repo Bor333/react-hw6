@@ -20,6 +20,10 @@ const navigate = [
     name: 'About',
     path: '/about',
   },
+  {
+    name: 'Articles',
+    path: '/articles',
+  },
 ];
 
 export const Header: FC = () => {

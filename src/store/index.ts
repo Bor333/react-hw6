@@ -1,6 +1,6 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit'
 import { profileReducer } from './profile/slice';
-import {messagesReducer} from "store/messages/reducer";
+import {messagesReducer} from "store/messages/slice";
 import { persistStore,
     persistReducer,
     FLUSH,

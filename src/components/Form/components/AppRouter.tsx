@@ -5,6 +5,7 @@ import {AboutWithConnect} from "src/pages/About";
 import {ChatList} from "components/ChatList";
 import {ChatPage} from "src/pages/ChatPage";
 import {lazy, FC} from "react";
+import {Articles} from "src/pages/Articles";
 //import {Profile} from "src/pages/Profile";
 
 
@@ -25,10 +26,9 @@ export const AppRouter: FC = () => (
             <Route path="about" element={<AboutWithConnect/>}/>
             <Route path="chats">
                 <Route index element={<ChatList/>}/>
-                <Route
-                    path=":chatId"
-                    element={<ChatPage/>}/>
+                <Route path=":chatId" element={<ChatPage/>}/>
             </Route>
+            <Route path="articles" element={<Articles/>}/>
         </Route>
         <Route path="*" element={<div> 404 page </div>} />
     </Routes>
