@@ -20,16 +20,21 @@ export const Articles: FC = () => {
         setArticles([]);
         setError('');
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        if(Math.random() > 0.5) {
-            fetch(`${api}/v3/articles`).then(response => response.json().then(data => setArticles(data))
-                .catch((err: Error) => setError(err.message))
-                .finally(() => setLoading(false)));
-        } else {
-            setError('custom error');
+
+        try {
+            const res = await fetch(`${api}/v3/articles`);
+            const data: IArticles[] = await res.json();
+            setArticles([]);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('error');
+            }
+        } finally {
             setLoading(false);
         }
-
-    }
+    };
 
     return (
         <>
