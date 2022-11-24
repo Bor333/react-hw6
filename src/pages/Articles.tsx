@@ -17,14 +17,13 @@ export const Articles: FC = () => {
 
     const getFetchArticles = async () => {
         setLoading(true);
-        setArticles([]);
         setError('');
+        setArticles([]);
         await new Promise((resolve) => setTimeout(resolve, 1000));
-
         try {
             const res = await fetch(`${api}/v3/articles`);
             const data: IArticles[] = await res.json();
-            setArticles([]);
+            setArticles(data);
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
