@@ -9,7 +9,6 @@ import {Articles} from "src/pages/Articles";
 import {SignIn} from "src/pages/SignIn";
 import {PrivateRoute} from "components/PrivateRoute";
 import {PublicRoute} from "components/PublicRoute";
-// import {Profile} from "src/pages/Profile";
 
 
 const Profile = lazy(() =>
