@@ -4,7 +4,7 @@ import {ThemeContext} from './utils/ThemeContext';
 import {Provider} from 'react-redux';
 import {persistor, store} from './store';
 import {PersistGate} from 'redux-persist/integration/react';
-import {AppRouter} from "components/Form/components/AppRouter";
+import {AppRouter} from "components/AppRouter";
 
 
 

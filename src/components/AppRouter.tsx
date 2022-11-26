@@ -4,9 +4,12 @@ import {Main} from "src/pages/Main";
 import {AboutWithConnect} from "src/pages/About";
 import {ChatList} from "components/ChatList";
 import {ChatPage} from "src/pages/ChatPage";
-import {lazy, FC} from "react";
+import {FC, lazy} from "react";
 import {Articles} from "src/pages/Articles";
-//import {Profile} from "src/pages/Profile";
+import {SignIn} from "src/pages/SignIn";
+import {PrivateRoute} from "components/PrivateRoute";
+import {PublicRoute} from "components/PublicRoute";
+// import {Profile} from "src/pages/Profile";
 
 
 const Profile = lazy(() =>
@@ -22,9 +25,13 @@ export const AppRouter: FC = () => (
    <Routes>
         <Route path="/" element={<Header/>}>
             <Route index element={<Main/>}/>
-            <Route path="profile" element={<Profile/>}/>
+            <Route
+                path="profile"
+                element={<PrivateRoute component={<Profile/>}  />}
+            />
             <Route path="about" element={<AboutWithConnect/>}/>
-            <Route path="chats">
+            <Route path="signin" element={<PublicRoute component={<SignIn/>}/> }/>
+            <Route path="chats" element={<PrivateRoute/>}>
                 <Route index element={<ChatList/>}/>
                 <Route path=":chatId" element={<ChatPage/>}/>
             </Route>

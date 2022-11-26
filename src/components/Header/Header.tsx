@@ -1,9 +1,12 @@
 import { FC } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import {NavLink, Outlet, useNavigate} from 'react-router-dom';
 
 import style from './Header.module.scss';
+import {useDispatch, useSelector} from "react-redux";
+import {StoreState} from "src/store";
+import {auth} from "store/profile/slice";
 
-const navigate = [
+const nav = [
   {
     name: 'Main',
     path: '/',
@@ -27,11 +30,23 @@ const navigate = [
 ];
 
 export const Header: FC = () => {
+  const isAuth = useSelector((state: StoreState) => state.profile.isAuth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(auth(false));
+  };
+
+  const handleLogin = () => {
+    navigate("/signin");
+  };
+
   return (
     <>
       <header style={{ backgroundColor: 'grey' }}>
         <ul className={style.ul}>
-          {navigate.map((item, idx) => (
+          {nav.map((item, idx) => (
             <li key={idx}>
               <NavLink
                 to={item.path}
@@ -46,6 +61,11 @@ export const Header: FC = () => {
         </ul>
       </header>
       <main>
+        {isAuth ? (
+            <button onClick={handleLogout}>logout</button>
+            ) : (
+            <button onClick={handleLogin}>login</button>
+        )}
         <Outlet />
       </main>
     </>
