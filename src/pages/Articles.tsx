@@ -1,45 +1,30 @@
-import {FC, useEffect, useState} from "react";
-import {api} from "src/constants";
+import {FC, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {StoreState} from "src/store";
+import {fetchData} from "store/articles/slice";
 
-
-interface IArticles {
-    id: string;
-    title: string;
-}
+import {AsyncThunk, ThunkDispatch} from "@reduxjs/toolkit";
 
 export const Articles: FC = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [articles, setArticles] = useState<IArticles[]>([]);
+    const loading = useSelector((state: StoreState) => state.articles.loading);
+    const error = useSelector((state: StoreState) => state.articles.error);
+    const articles = useSelector((state: StoreState) => state.articles.articles);
+
+    const fetchDispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();
+
     useEffect(() => {
-        getFetchArticles();
+        handleFetchData();
     }, [])
 
-    const getFetchArticles = async () => {
-        setLoading(true);
-        setError('');
-        setArticles([]);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        try {
-            const res = await fetch(`${api}/v3/articles`);
-            const data: IArticles[] = await res.json();
-            setArticles(data);
-        } catch (err) {
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError('error');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+    const handleFetchData = () => {
+        fetchDispatch(fetchData());
+    }
 
     return (
         <>
             <h2>Articles</h2>
             {loading && <div>Loading...</div>}
-            <button onClick={getFetchArticles}>reload</button>
+            <button onClick={() =>  handleFetchData()}>reload</button>
             <ul>{articles.map((article) => (
                 <li key={article.id}>{article.title}</li>
             ))}</ul>

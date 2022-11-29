@@ -1,25 +1,32 @@
 import React, {FC, useState} from "react";
-import {useDispatch} from "react-redux";
-import {auth} from "store/profile/slice";
 import {useNavigate} from "react-router-dom";
+import {logIn} from "src/services/firebase";
+import {CircularProgress} from "@mui/material";
 
-export const SignIn:FC = () => {
+export const SignIn: FC = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(false);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
 
-        if(login === 'gb' && password === 'gb') {
-            dispatch(auth(true));
-            navigate(-1)
-        } else {
-            setError(true);
+        try {
+            await logIn(login, password);
+            navigate('/chats');
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('error');
+            }
+        } finally {
+            setLoading(false);
         }
     };
     return (
@@ -27,16 +34,22 @@ export const SignIn:FC = () => {
             <h2>Sign In</h2>
             <form onSubmit={handleSubmit}>
                 <p>Login:</p>
-                <input type="text"
-                       onChange={(e) => setLogin(e.target.value)} value={login} />
+                <input type="email"
+                       onChange={(e) => setLogin(e.target.value)}
+                       value={login}
+                       required
+                />
                 <p>Password:</p>
                 <input type="text"
-                       onChange={(e) => setPassword(e.target.value)} value={password} />
+                       onChange={(e) => setPassword(e.target.value)} value={password}
+                       required
+                />
                 <br/>
                 <br/>
                 <button>Login</button>
             </form>
-            {error && <p style={{color: "red"}}>Логин или пароль не верны</p>}
+            {loading && <CircularProgress/>}
+            {error && <p style={{color: "red"}}>{error}</p>}
         </>
     );
 };
