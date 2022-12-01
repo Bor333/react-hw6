@@ -1,16 +1,15 @@
 import {FC, useState, memo, useContext} from 'react';
 import TextField from '@mui/material/TextField';
 import {useParams} from 'react-router-dom';
-
 import {Button} from './components/Button';
 import {AUTHOR} from 'src/types';
 import {ThemeContext} from 'src/utils/ThemeContext';
 import {useDispatch} from "react-redux";
-import { addMessageWithReply} from "store/messages/slice";
 import {Wrapper} from "components/Form/styled";
 import {ThunkDispatch} from "redux-thunk";
 import {StoreState} from "src/store";
-import {AddMessage} from "store/messages/slice";
+import {push, ref} from "firebase/database";
+import {db} from "src/services/firebase";
 
 
 export const Form: FC = memo(() => {
@@ -23,14 +22,10 @@ export const Form: FC = memo(() => {
     const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         if (chatId) {
-            dispatch(addMessageWithReply({
-                    chatName: chatId,
-                    message: {
-                        author: AUTHOR.USER,
-                        value,
-                    }
-                })
-            );
+            push(ref(db, `user/messages/${chatId}/messages`), {
+                author: AUTHOR.USER,
+                value,
+            });
         }
         setValue('');
     };

@@ -5,6 +5,7 @@ import style from './Header.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {StoreState} from "src/store";
 import {auth} from "store/profile/slice";
+import {logOut} from "src/services/firebase";
 
 const nav = [
   {
@@ -34,12 +35,14 @@ export const Header: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(auth(false));
-  };
-
-  const handleLogin = () => {
-    navigate("/signin");
+  const handleLogout = async () => {
+    try {
+      await logOut();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      dispatch(auth(false));
+    }
   };
 
   return (
@@ -64,7 +67,10 @@ export const Header: FC = () => {
         {isAuth ? (
             <button onClick={handleLogout}>logout</button>
             ) : (
-            <button onClick={handleLogin}>login</button>
+           <>
+             <button onClick={() => navigate("/signin")}>login</button>
+             <button onClick={() => navigate("/signup")}>signUp</button>
+           </>
         )}
         <Outlet />
       </main>
